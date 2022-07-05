@@ -34,4 +34,30 @@ class YouTubeVideoIdParsing
         $this->charsLen = count($this->chars);
     }
 
+    /**
+     * It encodes number to the YouTube's video key.
+     *
+     * @author Nikola Nikolić <rogers94kv@gmail.com>
+     * @param  int    $num Number to be encoded.
+     * @return string      Video key.
+     */
+    public function encode(int $num)
+    {
+        $ret = '';
+
+        $num = abs($num);
+        if (!$num) {
+            return '0';
+        }
+
+        while ($num > 0) {
+            $char = $this->chars[$num % $this->charsLen];
+            $num  = $num / $this->charsLen | 0;
+
+            $ret = $char . $ret;
+        }
+
+        return $ret;
+    }
+
 }
