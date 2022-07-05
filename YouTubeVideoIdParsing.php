@@ -60,4 +60,30 @@ class YouTubeVideoIdParsing
         return $ret;
     }
 
+    /**
+     * It decodes YouTube's video key.
+     *
+     * @author Nikola Nikolić <rogers94kv@gmail.com>
+     * @param  string $str Video key to be converted.
+     * @return int         Video key's number.
+     */
+    public function decode(string $str)
+    {
+        $ret = 0;
+
+        $strLen  = strlen($str) - 1;
+        $counter = 0;
+
+        while ($counter <= $strLen) {
+            $char         = $str[$counter];
+            $charIndex    = array_search($char, $this->chars);
+            $charPosition = $strLen - $counter;
+
+            $ret += ($charIndex * pow($this->charsLen, $charPosition));
+            $counter++;
+        }
+
+        return $ret;
+    }
+
 }
